@@ -1,0 +1,13 @@
+# 비밀키/토큰 — 절대 커밋 금지
+kakao_secret.txt
+kakao_token.json
+.env
+.env.local
+
+# Supabase CLI 로컬 산출물
+supabase/.temp/
+supabase/.branches/
+
+# Python
+__pycache__/
+*.pyc

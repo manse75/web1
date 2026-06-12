@@ -1,0 +1,29 @@
+# main 브랜치에 push 하면 Supabase Edge Function을 자동 배포합니다 (깃허브 연동).
+# 필요한 GitHub Secrets (저장소 Settings > Secrets and variables > Actions):
+#   SUPABASE_ACCESS_TOKEN : https://supabase.com/dashboard/account/tokens 에서 발급
+#   SUPABASE_PROJECT_REF  : Supabase 프로젝트 설정 > General 의 Reference ID
+name: Deploy Supabase Edge Function
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "supabase/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy stock-robot function
+        run: supabase functions deploy stock-robot --project-ref "$SUPABASE_PROJECT_REF"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}

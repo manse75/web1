@@ -1,0 +1,5 @@
+project_id = "web1"
+
+[functions.stock-robot]
+# pg_cron이 anon key(Bearer)로 호출하므로 JWT 검증을 켜 둡니다.
+verify_jwt = true
